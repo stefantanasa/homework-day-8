@@ -7,7 +7,7 @@ const LatestRelease = ({ books, selectBook }) => {
     <div>
       <div className=" jumbotron-fluid bg-dark"></div>
       <div>
-        <h1 className="text-white latest-release">Latest Release</h1>
+        <h1 className=" latest-release">Latest Release</h1>
       </div>
       <div className="container">
         <div className="row">

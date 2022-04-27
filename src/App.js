@@ -16,8 +16,7 @@ const App = () => {
   const [colDisplay, setColDisplay] = useState("d-none");
   const [data, setData] = useState([]);
   const [comments, setComments] = useState([]);
-  const [commentToDelete, setCommentToDelete] = useState(null);
-
+  const [loading, setLoading] = useState("d-none");
   const [newComment, setNewComment] = useState({
     rate: null,
     comment: "",
@@ -43,6 +42,7 @@ const App = () => {
   };
 
   const fetchData = async () => {
+    setLoading("");
     try {
       if (asinSelected) {
         let response = await fetch(
@@ -60,6 +60,8 @@ const App = () => {
 
           console.log(response);
           setComments(response);
+          setLoading("d-none");
+
           console.log("CDM");
         }
       } else {
@@ -70,6 +72,7 @@ const App = () => {
     }
   };
   const onDeleteComment = async (commentId) => {
+    setLoading("");
     try {
       const data = await fetch(
         `https://striveschool-api.herokuapp.com/api/comments/${commentId}`,
@@ -93,22 +96,6 @@ const App = () => {
     console.log("Something happened!");
   };
 
-  // componentDidUpdate = async (prevProps, PrevState) => {
-  //   if (PrevState.asinSelected !== this.state.asinSelected) {
-  //     await this.fetchData();
-  //   }
-  //   if (PrevState.commentToDelete !== this.state.commentToDelete) {
-  //     console.log("delete ");
-  //     await this.onDeleteComment(this.state.commentToDelete);
-  //     await this.fetchData();
-  //   }
-  //   if (PrevState.comments !== this.state.comments) {
-  //     console.log("fetch! New Data!");
-  //   } else {
-  //     console.log("no fetch");
-  //   }
-  // };
-
   useEffect(() => {
     fetchData();
   }, [asinSelected]);
@@ -118,6 +105,7 @@ const App = () => {
   }, []);
 
   const onPostComment = async (e) => {
+    setLoading("");
     e.preventDefault();
     try {
       let response = await fetch(
@@ -152,15 +140,16 @@ const App = () => {
           <LatestRelease books={data} selectBook={selectBook} />
         </Col>
         <Col lg={4} className={colDisplay}>
-          <div>
-            <CommentArea
-              onPostComment={onPostComment}
-              comments={comments}
-              onDelete={onDeleteComment}
-              getCommentRate={getCommentRate}
-              getCommentText={getCommentText}
-            />
-          </div>
+          <CommentArea
+            onPostComment={onPostComment}
+            comments={comments}
+            onDelete={onDeleteComment}
+            getCommentRate={getCommentRate}
+            getCommentText={getCommentText}
+            loading={loading}
+          />
+
+          <div></div>
         </Col>
       </Row>
       <MyFooter />

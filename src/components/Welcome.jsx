@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 
 const Welcome = () => {
   return (
@@ -15,7 +14,7 @@ const Welcome = () => {
           It uses utility classes for typography and spacing to space content
           out within the larger container.
         </p>
-        <Button className="more">Learn More</Button>
+        <button className="more btn btn-warning">Learn More</button>
       </div>
     </div>
   );

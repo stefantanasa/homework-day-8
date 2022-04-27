@@ -49,7 +49,7 @@ const AddComment = (props) => {
           onChange={(e) => props.getCommentText(e.target.value)}
         >
           <Form.Control required as="textarea" rows={3} />
-          <button type="submit" className="btn btn-sm submit-comment">
+          <button type="submit" className="btn btn-info submit-comment">
             Send
           </button>
         </Form.Group>
