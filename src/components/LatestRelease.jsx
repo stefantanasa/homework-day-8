@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import horror from "../Data/horror.json";
+import React from "react";
+
 import OneCard from "./OneCard";
 
 const LatestRelease = ({ books, selectBook }) => {

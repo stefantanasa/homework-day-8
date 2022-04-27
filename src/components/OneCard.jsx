@@ -1,8 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-import CommentArea from "./CommentArea";
-
-class OneCard extends Component {
+const OneCard = (props) => {
   // componentDidMount = async () => {
   //   try {
   //     let response = await fetch(
@@ -26,40 +24,33 @@ class OneCard extends Component {
   //     console.log(error);
   //   }
   // };
-  render() {
-    return (
-      <div>
-        <div
-          className="one-card"
-          onClick={() => this.props.selectBook(this.props.asin)}
-        >
-          <img className="one-card-image" alt="" src={this.props.image} />
-          <p className="product-title">{this.props.title}</p>
-          <p className="product-category ">{this.props.category}</p>
-        </div>
 
-        <div className="under-card ">
-          <div className="offer">
-            <div>
-              <ion-icon
-                name="cart-outline"
-                style={{ height: "20px" }}
-              ></ion-icon>
-            </div>
-            <p>BUY NOW</p>
-          </div>
-          <div className="product-price">
-            <div>${this.props.price}</div>
-          </div>
-        </div>
+  return (
+    <div>
+      <div className="one-card" onClick={() => props.selectBook(props.asin)}>
+        <img className="one-card-image" alt="" src={props.image} />
+        <p className="product-title">{props.title}</p>
+        <p className="product-category ">{props.category}</p>
+      </div>
 
-        {/* <CommentArea
+      <div className="under-card ">
+        <div className="offer">
+          <div>
+            <ion-icon name="cart-outline" style={{ height: "20px" }}></ion-icon>
+          </div>
+          <p>BUY NOW</p>
+        </div>
+        <div className="product-price">
+          <div>${props.price}</div>
+        </div>
+      </div>
+
+      {/* <CommentArea
           asin={this.props.asin}
           isSelected={this.state.isSelected}
         /> */}
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default OneCard;

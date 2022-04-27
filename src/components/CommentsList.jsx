@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { ListGroup, Badge } from "react-bootstrap";
 import AddComment from "./AddComment";
@@ -11,14 +11,14 @@ const CommentsList = ({
 }) => {
   return (
     <React.Fragment>
-      {comments.length > 0 && (
-        <AddComment
-          onPostComment={onPostComment}
-          getCommentRate={getCommentRate}
-          getCommentText={getCommentText}
-        />
-      )}
+      <AddComment
+        onPostComment={onPostComment}
+        getCommentRate={getCommentRate}
+        getCommentText={getCommentText}
+      />
+
       <ListGroup>
+        {/* {comments.map((c) => console.log(c))} */}
         {comments.map((com) => (
           <div key={com._id}>
             <ListGroup.Item

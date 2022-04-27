@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./App.css";
 import MyNav from "./components/MyNav";
@@ -10,92 +10,43 @@ import CommentArea from "./components/CommentArea";
 import horror from "./Data/horror.json";
 
 const App = () => {
-  // state = {
-  //   asinSelected: null,
-  //   colDisplay: "d-none",
-  //   data: [],
-  //   comments: [],
-  //   commentToDelete: null,
-  //   posted: false,
-  //   newComment: { rate: null, comment: "", elementId: null },
-  // };
-  books = horror.slice(0, 115);
+  const books = horror.slice(0, 115);
 
   const [asinSelected, setAsinSelected] = useState(null);
   const [colDisplay, setColDisplay] = useState("d-none");
   const [data, setData] = useState([]);
   const [comments, setComments] = useState([]);
   const [commentToDelete, setCommentToDelete] = useState(null);
-  const [posted, setPosted] = useState(false);
+
   const [newComment, setNewComment] = useState({
     rate: null,
     comment: "",
     elementId: null,
   });
 
-  selectBook = (asin) => {
-    console.log("OK, works! asin: ", asin);
-    this.setState({
-      ...this.state,
-      asinSelected: asin,
-      colDisplay: "d-block",
-    });
-
-    if (
-      this.state.colDisplay === "d-block" &&
-      this.state.asinSelected === asin
-    ) {
-      this.setState({
-        ...this.state,
-        colDisplay: "d-none",
-      });
+  const selectBook = (asin) => {
+    setAsinSelected(asin);
+    setColDisplay("d-block");
+    if (colDisplay === "d-block" && asinSelected === asin) {
+      setColDisplay("d-none");
     }
   };
 
-  const selectBook = (asin) => {
-    console.log("OK, works! asin: ", asin);
-    setAsinSelected(asin);
-    setColDisplay("d-block");
+  const getCommentRate = (rate) => {
+    console.log("Rate :", rate);
+    setNewComment({ ...newComment, rate: rate, elementId: asinSelected });
   };
 
-  getCommentId = (commentId) => {
-    console.log(commentId);
-    this.setState({
-      ...this.state,
-      commentToDelete: commentId,
-    });
-  };
-
-  getCommentRate = (rate) => {
-    console.log("Rate: ", rate);
-
-    this.setState({
-      ...this.state,
-      newComment: {
-        ...this.state.newComment,
-        rate: rate,
-        elementId: this.state.asinSelected,
-      },
-    });
-  };
-  getCommentText = (text) => {
+  const getCommentText = (text) => {
     console.log("Comment: ", text);
-
-    this.setState({
-      ...this.state,
-      newComment: {
-        ...this.state.newComment,
-        elementId: this.state.asinSelected,
-        comment: text,
-      },
-    });
+    setNewComment({ ...newComment, comment: text, elementId: asinSelected });
   };
 
-  fetchData = async () => {
+  const fetchData = async () => {
     try {
-      if (this.state.asinSelected) {
+      if (asinSelected) {
         let response = await fetch(
-          `https://striveschool-api.herokuapp.com/api/comments/${this.state.asinSelected}`,
+          `https://striveschool-api.herokuapp.com/api/comments/${asinSelected}`,
           {
             headers: {
               Authorization:
@@ -106,10 +57,9 @@ const App = () => {
 
         if (response.ok) {
           response = await response.json();
-          this.setState({
-            ...this.state,
-            comments: response,
-          });
+
+          console.log(response);
+          setComments(response);
           console.log("CDM");
         }
       } else {
@@ -119,7 +69,7 @@ const App = () => {
       console.log(error);
     }
   };
-  onDeleteComment = async (commentId) => {
+  const onDeleteComment = async (commentId) => {
     try {
       const data = await fetch(
         `https://striveschool-api.herokuapp.com/api/comments/${commentId}`,
@@ -135,43 +85,46 @@ const App = () => {
       );
       if (data.ok) {
         console.log("Comment Deleted!");
+        fetchData();
       }
     } catch (error) {
       console.log("❌There is an error: ", error);
     }
     console.log("Something happened!");
   };
-  componentDidUpdate = async (prevProps, PrevState) => {
-    if (PrevState.asinSelected !== this.state.asinSelected) {
-      await this.fetchData();
-    }
-    if (PrevState.commentToDelete !== this.state.commentToDelete) {
-      console.log("delete ");
-      await this.onDeleteComment(this.state.commentToDelete);
-      await this.fetchData();
-    }
-    if (PrevState.comments !== this.state.comments) {
-      console.log("fetch! New Data!");
-    } else {
-      console.log("no fetch");
-    }
-  };
 
-  componentDidMount = async () => {
-    this.setState({
-      ...this.state,
-      data: this.books,
-    });
-  };
+  // componentDidUpdate = async (prevProps, PrevState) => {
+  //   if (PrevState.asinSelected !== this.state.asinSelected) {
+  //     await this.fetchData();
+  //   }
+  //   if (PrevState.commentToDelete !== this.state.commentToDelete) {
+  //     console.log("delete ");
+  //     await this.onDeleteComment(this.state.commentToDelete);
+  //     await this.fetchData();
+  //   }
+  //   if (PrevState.comments !== this.state.comments) {
+  //     console.log("fetch! New Data!");
+  //   } else {
+  //     console.log("no fetch");
+  //   }
+  // };
 
-  onPostComment = async (e) => {
+  useEffect(() => {
+    fetchData();
+  }, [asinSelected]);
+
+  useEffect(() => {
+    setData(books);
+  }, []);
+
+  const onPostComment = async (e) => {
     e.preventDefault();
     try {
-      let data = await fetch(
+      let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/comments/",
         {
           method: "POST",
-          body: JSON.stringify(this.state.newComment),
+          body: JSON.stringify(newComment),
           headers: {
             Authorization:
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWIwOWZmNTRjZmY1ZjAwMTU5MGJkYWUiLCJpYXQiOjE2NTA2NjM3MDYsImV4cCI6MTY1MTg3MzMwNn0.t-bhGh4Ste0C-qGe1NWOGB8jhgMqxJtbscKzTT-wrio",
@@ -179,14 +132,11 @@ const App = () => {
           },
         }
       );
-      if (data.ok) {
-        data = await data.json();
+      if (response.ok) {
+        response = await response.json();
         console.log("✅ You just posted");
 
-        this.setState({
-          ...this.state,
-          comments: [...this.state.comments, data],
-        });
+        fetchData();
       }
     } catch (error) {
       console.log("❌There is an error: ", error);
@@ -194,21 +144,21 @@ const App = () => {
   };
 
   return (
-    <div className="App bg-dark">
-      <MyNav />
+    <div className="App">
+      <MyNav className="navbar navbar-light bg-light" />
       <Welcome />
       <Row>
         <Col>
-          <LatestRelease books={this.state.data} selectBook={this.selectBook} />
+          <LatestRelease books={data} selectBook={selectBook} />
         </Col>
-        <Col lg={4} className={this.state.colDisplay}>
+        <Col lg={4} className={colDisplay}>
           <div>
             <CommentArea
-              onPostComment={this.onPostComment}
-              comments={this.state.comments}
-              onDelete={this.getCommentId}
-              getCommentRate={this.getCommentRate}
-              getCommentText={this.getCommentText}
+              onPostComment={onPostComment}
+              comments={comments}
+              onDelete={onDeleteComment}
+              getCommentRate={getCommentRate}
+              getCommentText={getCommentText}
             />
           </div>
         </Col>
