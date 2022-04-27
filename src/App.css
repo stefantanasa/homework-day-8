@@ -1,0 +1,168 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* custom css */
+
+.one-card {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 21rem;
+  width: 15rem;
+  background-color: white;
+  margin-left: 20px;
+
+  border-radius: 0.5rem;
+  box-shadow: -15px 16px 22px -11px rgba(0, 0, 0, 0.91);
+  -webkit-box-shadow: -15px 16px 22px -11px rgba(0, 0, 0, 0.91);
+  -moz-box-shadow: -15px 16px 22px -11px rgba(0, 0, 0, 0.91);
+}
+
+.one-card-image {
+  position: absolute;
+  object-fit: cover;
+  max-height: 15rem;
+  width: 15rem;
+  border-radius: 0.5rem;
+}
+.product-title {
+  position: absolute;
+  top: 16rem;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
+  max-height: 3rem;
+  white-space: wrap;
+}
+
+.under-card {
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+  margin-left: 20px;
+  height: 4rem;
+  width: 15rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: -15px 16px 22px -11px rgba(0, 0, 0, 0.91);
+  -webkit-box-shadow: -15px 16px 22px -11px rgba(0, 0, 0, 0.91);
+  -moz-box-shadow: -15px 16px 22px -11px rgba(0, 0, 0, 0.91);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.product-price {
+  color: #000000;
+  position: absolute;
+  right: 6.5rem;
+  top: 0.5rem;
+  font-size: 30px;
+  font-weight: 700;
+  z-index: 1;
+}
+
+.offer {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #8061fb;
+  width: 5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.74);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.74);
+}
+
+.jumbotron {
+  background-color: #bdacff !important;
+}
+.latest-release {
+  border-bottom: 1px solid #bdacff;
+  margin-bottom: 2rem;
+  box-shadow: 0px 5px 10px 0px #bdacff;
+}
+
+.product-category {
+  color: #ffffff;
+  font-weight: 700;
+  position: absolute;
+  bottom: -0.5rem;
+  background-color: #6767675a;
+
+  padding: 0.4rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  border-radius: 0.4rem;
+}
+
+.more {
+  background-color: #bdacff !important;
+  border-bottom: 3px;
+  border: 2px solid white !important;
+}
+
+.submit-comment {
+  position: absolute;
+  z-index: 3;
+  bottom: 0px;
+  left: 0px;
+  background-color: #8061fb !important;
+  color: white !important;
+  border-radius: 10%;
+  border: 3px solid #8061fb;
+}
+.textarea-comment {
+  position: relative;
+}
+.delete-btn {
+  position: relative;
+}
+
+.comments-list {
+  width: 240px;
+}
